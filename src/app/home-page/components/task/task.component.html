@@ -1,0 +1,18 @@
+<div><ng-content></ng-content></div>
+<ng-container #viewContainerRef>
+  <div class="task">
+    <div
+      class="task_item"
+      *ngFor="let task of tasks; index as id"
+      (click)="openDialog(id)"
+    >
+      <div class="task_title">
+        {{ task.title }}
+      </div>
+      <div class="task_icons">
+        <button class="btn_icon" (click)="editTask()"><mat-icon>edit</mat-icon></button>
+        <button class="btn_icon" (click)="deleteTask()"><mat-icon>delete</mat-icon></button>
+      </div>
+    </div>
+  </div>
+</ng-container>

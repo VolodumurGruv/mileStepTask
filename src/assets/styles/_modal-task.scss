@@ -1,0 +1,35 @@
+.title {
+  font-family: $global-font;
+  font-size: 1.3rem;
+  font-weight: 900;
+  margin-bottom: 1.5rem;
+}
+
+.description {
+  font-family: $lato-font;
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+}
+
+.priority {
+  font-family: $lato-font;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  font-weight: 800;
+  text-align: center;
+}
+
+.done {
+  text-align: center;
+  font-size: 1rem;
+  font-weight: 900;
+  font-family: $lato-font;
+}
+
+.duedate {
+  text-align: center;
+  font-size: 1rem;
+  font-weight: 900;
+  font-family: $lato-font;
+}

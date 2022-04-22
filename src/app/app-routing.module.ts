@@ -4,7 +4,10 @@ import { HomePageComponent } from './home-page/components/home-page/home-page.co
 
 const routes: Routes = [
   { path: '', redirectTo: '/', pathMatch: 'full' },
-  { path: '', component: HomePageComponent },
+  {
+    path: '',
+    component: HomePageComponent,
+  },
   { path: '**', redirectTo: '/', pathMatch: 'full' },
 ];
 
