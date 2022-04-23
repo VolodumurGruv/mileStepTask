@@ -16,8 +16,8 @@ export const tasks: Task[] = [
     dueDate: new Date(2022, 4, 1),
   },
   {
-    title: 'something new to do',
-    description: 'You should do something',
+    title: 'do the dishes',
+    description: 'You should wash up plates',
     isDone: false,
     priority: 1,
     dueDate: new Date(2022, 4, 1),

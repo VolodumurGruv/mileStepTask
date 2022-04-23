@@ -10,10 +10,10 @@
   &_item {
     display: flex;
     justify-content: space-between;
+
     padding: 0.7rem;
     margin-bottom: 0.7rem;
     border-radius: 7px;
-    text-align: center;
     font-size: 1.2rem;
     font-weight: 700;
     font-family: $global-font;
@@ -29,6 +29,14 @@
       text-shadow: 5px 5px 3px white;
       border-radius: 7px;
     }
+  }
+
+  &_title {
+    display: flex;
+    align-items: center;
+    width: 90%;
+    height: 2rem;
+    cursor: pointer;
   }
 
   &_icons mat-icon {
