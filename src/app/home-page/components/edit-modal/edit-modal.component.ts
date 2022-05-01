@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Task } from 'src/app/interfaces/task.interface';
 
@@ -12,6 +12,8 @@ export class EditModalComponent implements OnInit {
   public data!: [number, Task];
   public editForm!: FormGroup;
 
+  public select: number[] = [1, 2, 3, 4, 5];
+
   constructor(
     private fb: FormBuilder,
     public dialogRef: MatDialogRef<EditModalComponent>,
@@ -21,6 +23,8 @@ export class EditModalComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.select = this.select.filter((item) => item !== this.data[1].priority);
+
     this.editForm = this.fb.group({
       title: [this.data[1].title],
       description: [this.data[1].description],
@@ -30,7 +34,9 @@ export class EditModalComponent implements OnInit {
     });
   }
 
-  onSubmit() {}
+  onSubmit() {
+    console.log(this.editForm.value);
+  }
 
   close() {
     this.dialogRef.close();

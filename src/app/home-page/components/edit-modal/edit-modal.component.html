@@ -9,19 +9,22 @@
   </mat-form-field>
   <mat-form-field appearance="fill">
     <mat-label>Priority</mat-label>
-    <mat-select formControlName="priority">
-      <mat-option value="one">1</mat-option>
-      <mat-option value="two">2</mat-option>
-      <mat-option value="three">3</mat-option>
-      <mat-option value="four">4</mat-option>
-      <mat-option value="five">5</mat-option>
+    <mat-select matNativeControl formControlName="priority">
+      <mat-option [value]="data[1].priority">{{ data[1].priority }}</mat-option>
+      <mat-option *ngFor="let item of select" [value]="item">{{
+        item
+      }}</mat-option>
     </mat-select>
   </mat-form-field>
   <div>
     <label>Is done?</label>
     <mat-radio-group formControlName="isDone">
-      <mat-radio-button value="true">True</mat-radio-button>
-      <mat-radio-button value="false">False</mat-radio-button>
+      <mat-radio-button value="true" [checked]="data[1].isDone"
+        >True</mat-radio-button
+      >
+      <mat-radio-button value="false" [checked]="!data[1].isDone"
+        >False</mat-radio-button
+      >
     </mat-radio-group>
   </div>
   <mat-form-field appearance="fill">

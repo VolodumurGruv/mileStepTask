@@ -23,10 +23,10 @@ export const tasks: Task[] = [
     dueDate: new Date(2022, 4, 1),
   },
   {
-    title: 'something new to do',
+    title: 'watch bees',
     description: 'You should do something',
     isDone: false,
-    priority: 1,
+    priority: 3,
     dueDate: new Date(2022, 4, 1),
   },
   {
@@ -37,17 +37,17 @@ export const tasks: Task[] = [
     dueDate: new Date(2022, 4, 1),
   },
   {
-    title: 'something new to do',
+    title: 'go home',
     description: 'You should do something',
     isDone: false,
-    priority: 1,
+    priority: 4,
     dueDate: new Date(2022, 4, 1),
   },
   {
-    title: 'something new to do',
+    title: 'study something new to do',
     description: 'You should do something',
     isDone: false,
-    priority: 1,
+    priority: 5,
     dueDate: new Date(2022, 4, 1),
   },
   {

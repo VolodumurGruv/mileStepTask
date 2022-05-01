@@ -5,7 +5,6 @@ import {
   ViewChild,
   ViewContainerRef,
   HostListener,
-  Optional,
 } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { Task } from 'src/app/interfaces/task.interface';
