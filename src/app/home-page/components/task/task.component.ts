@@ -12,6 +12,8 @@ import { Task } from 'src/app/interfaces/task.interface';
 import { tasks } from 'src/app/temporary/task';
 import { TaskItemComponent } from '../task-item/task-item.component';
 import { ModalComponent } from '../modal/modal.component';
+import { EditModalComponent } from '../edit-modal/edit-modal.component';
+import { DeleteModalComponent } from '../delete-modal/delete-modal.component';
 
 @Component({
   selector: 'app-task',
@@ -30,10 +32,7 @@ export class TaskComponent {
 
   public tasks: Task[] = tasks;
 
-  constructor(
-    public matDialog: MatDialog,
-    @Optional() private parent: TaskItemComponent
-  ) {}
+  constructor(public matDialog: MatDialog) {}
 
   private addTemplate(temp: TemplateRef<any>): void {
     if (temp) {
@@ -41,22 +40,35 @@ export class TaskComponent {
     }
   }
 
-  openDialog(id: number) {
+  openDialog(id: number, componentIs: any) {
     const matConfig = new MatDialogConfig();
 
-    matConfig.id = 'dialog-task';
+    matConfig.id = id.toString();
     matConfig.height = 'auto';
     matConfig.width = 'auto';
-    matConfig.data = id;
+    matConfig.data = [id, this.tasks[id]];
 
-    const matDialogOpen = this.matDialog.open(ModalComponent, matConfig);
+    const matDialogOpen = this.matDialog.open(componentIs, matConfig);
   }
 
-  editTask() {
-    console.log('edit');
+  openTask(id: number, name: string) {
+    if (name === 'task') {
+      this.openDialog(id, ModalComponent);
+    }
   }
 
-  deleteTask() {
-    console.log('delete');
+  editTask(id: number, name: string) {
+    if (name === 'edit') {
+      this.openDialog(id, EditModalComponent);
+    }
   }
+
+  deleteTask(id: number, name: string) {
+    console.log(id);
+    if (name === 'delete') {
+      this.openDialog(id, DeleteModalComponent);
+    }
+  }
+
+  addTask(name: string) {}
 }

@@ -6,6 +6,9 @@ import { ModalComponent } from './components/modal/modal.component';
 import { TaskComponent } from './components/task/task.component';
 import { TaskItemComponent } from './components/task-item/task-item.component';
 import { EditModalComponent } from './components/edit-modal/edit-modal.component';
+import { DeleteModalComponent } from './components/delete-modal/delete-modal.component';
+import { AddModalComponent } from './components/add-modal/add-modal.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -14,8 +17,10 @@ import { EditModalComponent } from './components/edit-modal/edit-modal.component
     ModalComponent,
     TaskItemComponent,
     EditModalComponent,
+    DeleteModalComponent,
+    AddModalComponent,
   ],
-  imports: [CommonModule, MaterialModule],
+  imports: [CommonModule, MaterialModule, FormsModule, ReactiveFormsModule],
   exports: [TaskComponent],
 })
 export class HomePageModule {}

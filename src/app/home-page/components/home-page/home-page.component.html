@@ -2,11 +2,4 @@
   <button class="btn_create" (click)="addTask()">Add new task</button>
 </div>
 
-<app-task [task]="task"></app-task>
-<ng-template #task>
-  <app-task-item></app-task-item>
-</ng-template>
-
-<ng-template #edit>
-  <app-edit-modal></app-edit-modal>
-</ng-template>
+<app-task></app-task>

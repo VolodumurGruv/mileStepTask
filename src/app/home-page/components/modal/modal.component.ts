@@ -13,16 +13,14 @@ export class ModalComponent implements OnDestroy {
 
   constructor(
     public dialogRef: MatDialogRef<ModalComponent>,
-    @Inject(MAT_DIALOG_DATA) id: number
+    @Inject(MAT_DIALOG_DATA) data: [number, Task]
   ) {
-this.task = this.tasks.filter((item, i) => i === id);
+    this.task = this.tasks.filter((item, i) => i === data[0]);
   }
 
   closeModal() {
     this.dialogRef.close();
   }
 
-  ngOnDestroy(): void {
-
-  }
+  ngOnDestroy(): void {}
 }
