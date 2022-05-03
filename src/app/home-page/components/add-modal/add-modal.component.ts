@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
+import { ModalService } from 'src/app/services/modal.service';
 
 @Component({
   selector: 'app-add-modal',
@@ -17,10 +18,14 @@ export class AddModalComponent {
 
   constructor(
     private fb: FormBuilder,
-    private dialogRef: MatDialogRef<AddModalComponent>
+    private dialogRef: MatDialogRef<AddModalComponent>,
+    private httpService: ModalService
   ) {}
 
-  onSubmit() {}
+  onSubmit() {
+    console.log(this.addForm.value);
+    // this.httpService.addTask().subscribe()
+  }
 
   close() {
     this.dialogRef.close();

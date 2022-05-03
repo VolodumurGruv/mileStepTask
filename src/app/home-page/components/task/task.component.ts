@@ -5,6 +5,7 @@ import {
   ViewChild,
   ViewContainerRef,
   HostListener,
+  OnInit,
 } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { Task } from 'src/app/interfaces/task.interface';
@@ -19,7 +20,7 @@ import { DeleteModalComponent } from '../delete-modal/delete-modal.component';
   templateUrl: './task.component.html',
   styleUrls: ['./task.component.scss'],
 })
-export class TaskComponent {
+export class TaskComponent implements OnInit {
   @Input() public task!: TemplateRef<TaskItemComponent>;
 
   @ViewChild('viewContainerRef', { read: ViewContainerRef })
@@ -32,6 +33,8 @@ export class TaskComponent {
   public tasks: Task[] = tasks;
 
   constructor(public matDialog: MatDialog) {}
+
+  ngOnInit(): void {}
 
   private addTemplate(temp: TemplateRef<any>): void {
     if (temp) {
