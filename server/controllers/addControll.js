@@ -1,7 +1,33 @@
-module.exports.task = (req, res) => {
-  const body = req.body;
+const Task = require("../schemas/taskSchema");
 
-  console.log(body);
+module.exports.taskAdd = async (req, res) => {
+  if (req.body) {
+    const task = new Task(req.body);
 
-  res.status(200).send("success");
+    try {
+      await task.save();
+
+      console.log("task was saved");
+
+      res.status(200).send({ status: "Ok" });
+    } catch (e) {
+      console.error(`Some error in adding new task ${e}`);
+
+      res.status(e.status).send({ error: e });
+    }
+  } else {
+    throw new Error("Data don't recived");
+  }
+
+  // res.status(200).send({ status: "Ok" });
+};
+
+module.exports.home = (req, res) => {
+  res.send("it works");
+};
+
+module.exports.taskGet = async (req, res) => {
+  const allTasks = await Task.find({});
+
+  res.json(allTasks);
 };

@@ -7,6 +7,7 @@ const app = exp();
 const mongoose = require("mongoose");
 const session = require("express-session");
 const MongoDBStore = require("connect-mongo");
+const cors = require("cors");
 const routes = require("./routes/routes");
 
 const PORT = process.env.PORT || 3000;
@@ -45,7 +46,9 @@ const sessionConfig = {
   },
 };
 
+app.use(cors());
 app.use(session(sessionConfig));
+app.use(exp.json());
 
 app.use("/", routes);
 
