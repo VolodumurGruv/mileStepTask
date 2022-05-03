@@ -20,7 +20,9 @@ export class AddModalComponent {
     private dialogRef: MatDialogRef<AddModalComponent>
   ) {}
 
-  onSubmit() {}
+  onSubmit() {
+    console.log(this.addForm.value);
+  }
 
   close() {
     this.dialogRef.close();
