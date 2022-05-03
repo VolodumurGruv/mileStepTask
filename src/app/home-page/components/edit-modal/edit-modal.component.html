@@ -1,0 +1,46 @@
+<form [formGroup]="editForm" (ngSubmit)="onSubmit()">
+  <mat-form-field appearance="fill">
+    <mat-label>Title</mat-label>
+    <input matInput type="text" formControlName="title" />
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Description</mat-label>
+    <textarea matInput formControlName="description"></textarea>
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Priority</mat-label>
+    <mat-select matNativeControl formControlName="priority">
+      <mat-option [value]="data[1].priority">{{ data[1].priority }}</mat-option>
+      <mat-option *ngFor="let item of select" [value]="item">{{
+        item
+      }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <div>
+    <label>Is done?</label>
+    <mat-radio-group formControlName="isDone">
+      <mat-radio-button value="true" [checked]="data[1].isDone"
+        >True</mat-radio-button
+      >
+      <mat-radio-button value="false" [checked]="!data[1].isDone"
+        >False</mat-radio-button
+      >
+    </mat-radio-group>
+  </div>
+  <mat-form-field appearance="fill">
+    <mat-label>Due date</mat-label>
+    <input matInput [matDatepicker]="datepicker" formControlName="dueDate" />
+    <mat-hint>MM/DD/YYYY</mat-hint>
+    <mat-datepicker-toggle matSuffix [for]="datepicker"></mat-datepicker-toggle>
+    <mat-datepicker #datepicker>
+      <mat-datepicker-actions>
+        <button mat-button matDatepickerCancel>Cancel</button>
+        <button mat-raised-button color="primary" matDatepickerApply>
+          Apply
+        </button>
+      </mat-datepicker-actions>
+    </mat-datepicker>
+  </mat-form-field>
+  <button type="submit">Edit</button>
+  <button type="button" (click)="close()">Cancel</button>
+</form>
