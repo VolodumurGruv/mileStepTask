@@ -23,8 +23,7 @@ export class AddModalComponent {
   ) {}
 
   onSubmit() {
-    console.log(this.addForm.value);
-    // this.httpService.addTask().subscribe()
+    this.httpService.addTask(this.addForm.value).subscribe();
   }
 
   close() {

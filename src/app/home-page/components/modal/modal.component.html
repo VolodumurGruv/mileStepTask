@@ -1,4 +1,4 @@
-<ng-container *ngIf="task.length > 0; else noTasks">
+<ng-container>
   <div *ngFor="let t of task">
     <div class="title">
       {{ t.title }}
@@ -17,4 +17,3 @@
     </div>
   </div>
 </ng-container>
-<ng-template #noTasks></ng-template>

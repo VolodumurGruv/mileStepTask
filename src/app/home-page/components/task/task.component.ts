@@ -14,6 +14,7 @@ import { TaskItemComponent } from '../task-item/task-item.component';
 import { ModalComponent } from '../modal/modal.component';
 import { EditModalComponent } from '../edit-modal/edit-modal.component';
 import { DeleteModalComponent } from '../delete-modal/delete-modal.component';
+import { ModalService } from 'src/app/services/modal.service';
 
 @Component({
   selector: 'app-task',
@@ -30,11 +31,13 @@ export class TaskComponent implements OnInit {
     this.addTemplate(this.task);
   }
 
-  public tasks: Task[] = tasks;
+  public tasks!: Task[];
 
-  constructor(public matDialog: MatDialog) {}
+  constructor(public matDialog: MatDialog, private httpService: ModalService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.httpService.getTasks().subscribe((t) => this.tasks = t);
+  }
 
   private addTemplate(temp: TemplateRef<any>): void {
     if (temp) {

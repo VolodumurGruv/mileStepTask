@@ -9,6 +9,7 @@ import { EditModalComponent } from './components/edit-modal/edit-modal.component
 import { DeleteModalComponent } from './components/delete-modal/delete-modal.component';
 import { AddModalComponent } from './components/add-modal/add-modal.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,13 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     DeleteModalComponent,
     AddModalComponent,
   ],
-  imports: [CommonModule, MaterialModule, FormsModule, ReactiveFormsModule],
+  imports: [
+    CommonModule,
+    MaterialModule,
+    FormsModule,
+    ReactiveFormsModule,
+    HttpClientModule,
+  ],
   exports: [TaskComponent],
 })
 export class HomePageModule {}

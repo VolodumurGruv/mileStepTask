@@ -2,6 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Task } from 'src/app/interfaces/task.interface';
+import { ModalService } from 'src/app/services/modal.service';
 
 @Component({
   selector: 'app-edit-modal',
@@ -15,6 +16,7 @@ export class EditModalComponent implements OnInit {
   public select: number[] = [1, 2, 3, 4, 5];
 
   constructor(
+    private httpService: ModalService,
     private fb: FormBuilder,
     public dialogRef: MatDialogRef<EditModalComponent>,
     @Inject(MAT_DIALOG_DATA) data: [number, Task]
@@ -23,6 +25,8 @@ export class EditModalComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log(this.data[1]._id);
+
     this.select = this.select.filter((item) => item !== this.data[1].priority);
 
     this.editForm = this.fb.group({
@@ -35,7 +39,12 @@ export class EditModalComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.editForm.value);
+    if (this.data[1]._id) {
+      console.log(this.editForm.value);
+      this.httpService
+        .editTask(this.data[1]._id, this.editForm.value)
+        .subscribe();
+    }
   }
 
   close() {
