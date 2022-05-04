@@ -69,7 +69,7 @@ export class TaskComponent implements OnInit {
   }
 
   deleteTask(id: number, name: string) {
-    console.log(id);
+
     if (name === 'delete') {
       this.openDialog(id, DeleteModalComponent);
     }

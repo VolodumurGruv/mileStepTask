@@ -9,25 +9,36 @@ module.exports.taskAdd = async (req, res) => {
 
       console.log("task was saved");
 
-      res.status(200).send({ status: "Ok" });
+      res
+        .status(200)
+        .send({ status: "Ok", message: "it is saved successfully" });
     } catch (e) {}
   } else {
-    throw new Error("Data don't recived");
+    console.error(`Some error in adding new task ${e}`);
+
+    res.status(e.status).send({ error: e });
   }
 };
 
 module.exports.taskGet = async (req, res) => {
-  const allTasks = await Task.find({});
+  try {
+    const allTasks = await Task.find({});
 
-  res.json(allTasks);
+    res.json(allTasks);
+  } catch (e) {
+    console.error(`Some error in adding new task ${e}`);
+
+    res.status(e.status).send({ error: e });
+  }
 };
 
 module.exports.taskEdit = async (req, res) => {
   try {
     const { id } = req.body;
-    console.log(id, req.body);
+
     const task = await Task.findByIdAndUpdate(id, req.body);
-    console.log(task);
+
+    res.status(200).send({ status: "Ok", message: "was edited" });
   } catch (e) {
     console.error(`Some error in adding new task ${e}`);
 
@@ -41,7 +52,7 @@ module.exports.taskDelete = async (req, res) => {
     console.log(id);
     await Task.findByIdAndDelete(id);
 
-    res.status(200).send({ status: "Ok" });
+    res.status(200).send({ status: "Ok", message: "was deleted" });
   } catch (e) {
     console.error(`Some error in adding new task ${e}`);
 

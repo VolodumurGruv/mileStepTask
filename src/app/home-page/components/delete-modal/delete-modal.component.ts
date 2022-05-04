@@ -21,9 +21,7 @@ export class DeleteModalComponent implements OnInit {
     this.task = data[1];
   }
 
-  ngOnInit(): void {
-    console.log(this.task);
-  }
+  ngOnInit(): void {}
 
   deleteTask() {
     if (this.task._id) {
