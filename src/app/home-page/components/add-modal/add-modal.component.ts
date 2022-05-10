@@ -24,6 +24,7 @@ export class AddModalComponent {
 
   onSubmit() {
     this.httpService.addTask(this.addForm.value).subscribe();
+    this.close();
   }
 
   close() {

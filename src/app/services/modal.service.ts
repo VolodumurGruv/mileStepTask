@@ -55,7 +55,10 @@ export class ModalService {
       .post<string>(`${this.URL}/delete`, JSON.stringify({ id }), {
         headers: this.headers,
       })
-      .pipe(catchError(this.handleError));
+      .pipe(
+        tap((b) => console.log(b)),
+        catchError(this.handleError)
+      );
   }
 
   private handleError(error: HttpErrorResponse) {

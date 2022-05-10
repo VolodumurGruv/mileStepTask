@@ -6,6 +6,9 @@ import {
   ViewContainerRef,
   HostListener,
   OnInit,
+  OnChanges,
+  SimpleChanges,
+  DoCheck,
 } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { Task } from 'src/app/interfaces/task.interface';
@@ -21,8 +24,10 @@ import { ModalService } from 'src/app/services/modal.service';
   templateUrl: './task.component.html',
   styleUrls: ['./task.component.scss'],
 })
-export class TaskComponent implements OnInit {
+export class TaskComponent implements OnInit, OnChanges, DoCheck {
   @Input() public task!: TemplateRef<TaskItemComponent>;
+
+  private oldTask!: Task[];
 
   @ViewChild('viewContainerRef', { read: ViewContainerRef })
   public viewContainerRef!: ViewContainerRef;
@@ -35,8 +40,24 @@ export class TaskComponent implements OnInit {
 
   constructor(public matDialog: MatDialog, private httpService: ModalService) {}
 
+  ngOnChanges(changes: SimpleChanges): void {
+    for (let ch in changes) {
+      console.log(changes[ch]);
+    }
+  }
+
   ngOnInit(): void {
-    this.httpService.getTasks().subscribe((t) => this.tasks = t);
+    this.httpService
+      .getTasks()
+      .subscribe((t) => (this.tasks = this.oldTask = t));
+  }
+
+  ngDoCheck(): void {
+    console.log('do check', this.oldTask);
+    if (this.tasks !== this.oldTask) {
+      this.oldTask = this.tasks;
+      console.log(this.oldTask);
+    }
   }
 
   private addTemplate(temp: TemplateRef<any>): void {
@@ -69,11 +90,8 @@ export class TaskComponent implements OnInit {
   }
 
   deleteTask(id: number, name: string) {
-
     if (name === 'delete') {
       this.openDialog(id, DeleteModalComponent);
     }
   }
-
-  addTask(name: string) {}
 }
