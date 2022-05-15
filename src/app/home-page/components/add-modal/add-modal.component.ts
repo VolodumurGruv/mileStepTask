@@ -23,8 +23,11 @@ export class AddModalComponent {
   ) {}
 
   onSubmit() {
-    this.httpService.addTask(this.addForm.value).subscribe();
-    this.close();
+    this.httpService.addTask(this.addForm.value).subscribe((b: any) => {
+      if (b.status === 'Ok') {
+        this.close();
+      }
+    });
   }
 
   close() {

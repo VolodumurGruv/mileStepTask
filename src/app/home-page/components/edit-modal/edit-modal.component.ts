@@ -40,7 +40,11 @@ export class EditModalComponent implements OnInit {
     if (this.data[1]._id) {
       this.httpService
         .editTask(this.data[1]._id, this.editForm.value)
-        .subscribe();
+        .subscribe((b: any) => {
+          if (b.status === 'Ok') {
+            this.close();
+          }
+        });
     }
   }
 

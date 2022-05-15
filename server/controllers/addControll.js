@@ -52,7 +52,9 @@ module.exports.taskDelete = async (req, res) => {
     console.log(id);
     await Task.findByIdAndDelete(id);
 
-    res.status(200).send({ status: "Ok", message: "was deleted" });
+    const task = await Task.find({});
+
+    res.status(200).send({ status: "Ok", message: "was deleted", task });
   } catch (e) {
     console.error(`Some error in adding new task ${e}`);
 

@@ -7,27 +7,26 @@ import {
   HostListener,
   OnInit,
   OnChanges,
+  SimpleChange,
   SimpleChanges,
-  DoCheck,
 } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { Task } from 'src/app/interfaces/task.interface';
-import { tasks } from 'src/app/temporary/task';
 import { TaskItemComponent } from '../task-item/task-item.component';
 import { ModalComponent } from '../modal/modal.component';
 import { EditModalComponent } from '../edit-modal/edit-modal.component';
 import { DeleteModalComponent } from '../delete-modal/delete-modal.component';
 import { ModalService } from 'src/app/services/modal.service';
+import { UpdateTaskService } from 'src/app/services/update-task.service';
 
 @Component({
   selector: 'app-task',
   templateUrl: './task.component.html',
   styleUrls: ['./task.component.scss'],
+  providers: [UpdateTaskService],
 })
-export class TaskComponent implements OnInit, OnChanges, DoCheck {
+export class TaskComponent implements OnInit, OnChanges {
   @Input() public task!: TemplateRef<TaskItemComponent>;
-
-  private oldTask!: Task[];
 
   @ViewChild('viewContainerRef', { read: ViewContainerRef })
   public viewContainerRef!: ViewContainerRef;
@@ -38,26 +37,20 @@ export class TaskComponent implements OnInit, OnChanges, DoCheck {
 
   public tasks!: Task[];
 
-  constructor(public matDialog: MatDialog, private httpService: ModalService) {}
+  constructor(
+    public matDialog: MatDialog,
+    private httpService: ModalService,
+    private updateTask: UpdateTaskService
+  ) {}
 
   ngOnChanges(changes: SimpleChanges): void {
-    for (let ch in changes) {
-      console.log(changes[ch]);
+    for (let change in changes) {
+      console.log(change);
     }
   }
 
   ngOnInit(): void {
-    this.httpService
-      .getTasks()
-      .subscribe((t) => (this.tasks = this.oldTask = t));
-  }
-
-  ngDoCheck(): void {
-    console.log('do check', this.oldTask);
-    if (this.tasks !== this.oldTask) {
-      this.oldTask = this.tasks;
-      console.log(this.oldTask);
-    }
+    this.httpService.getTasks().subscribe((b) => (this.tasks = b));
   }
 
   private addTemplate(temp: TemplateRef<any>): void {
@@ -73,6 +66,7 @@ export class TaskComponent implements OnInit, OnChanges, DoCheck {
     matConfig.height = 'auto';
     matConfig.width = 'auto';
     matConfig.data = [id, this.tasks[id]];
+    matConfig.disableClose = true;
 
     const matDialogOpen = this.matDialog.open(componentIs, matConfig);
   }

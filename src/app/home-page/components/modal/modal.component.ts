@@ -1,21 +1,13 @@
-import {
-  Component,
-  OnDestroy,
-  Inject,
-  OnInit,
-  OnChanges,
-  SimpleChanges,
-} from '@angular/core';
+import { Component, OnDestroy, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ModalService } from 'src/app/services/modal.service';
-import { tasks } from 'src/app/temporary/task';
 import { Task } from '../../../interfaces/task.interface';
 
 @Component({
   selector: 'app-modal',
   templateUrl: './modal.component.html',
 })
-export class ModalComponent implements OnInit, OnDestroy, OnChanges {
+export class ModalComponent implements OnInit, OnDestroy {
   private data!: [number, Task];
   public tasks!: Task[];
   public task!: Task[];
@@ -29,20 +21,13 @@ export class ModalComponent implements OnInit, OnDestroy, OnChanges {
 
     this.httpService
       .getTasks()
-      .subscribe((t) => (this.task = t.filter((item, i) => i === data[0])));
-  }
-
-  ngOnChanges(changes: SimpleChanges): void {
-    for (const ch in changes) {
-      console.log(changes[ch]);
-    }
+      .subscribe((t) => (this.task = t.filter((_, i) => i === data[0])));
   }
 
   ngOnInit(): void {}
 
   closeModal(): void {
-    console.log(this.data);
-    this.dialogRef.beforeClosed();
+    this.dialogRef.beforeClosed().subscribe((b) => console.log(b));
     this.dialogRef.close();
   }
 

@@ -1,21 +1,22 @@
-import { Component, DoCheck, Inject, OnInit, ViewChild } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Task } from 'src/app/interfaces/task.interface';
 import { ModalService } from 'src/app/services/modal.service';
-import { ModalComponent } from '../modal/modal.component';
+import { UpdateTaskService } from 'src/app/services/update-task.service';
 
 @Component({
   selector: 'app-delete-modal',
   templateUrl: './delete-modal.component.html',
   styleUrls: ['./delete-modal.component.scss'],
+  providers: [UpdateTaskService],
 })
-export class DeleteModalComponent implements OnInit, DoCheck {
+export class DeleteModalComponent implements OnInit {
   private data!: [number, Task];
   public task!: Task;
-
-  private oldData!: Task;
+  private tasks!: Task[];
 
   constructor(
+    private updateTask: UpdateTaskService,
     private httpService: ModalService,
     public dialogRef: MatDialogRef<DeleteModalComponent>,
     @Inject(MAT_DIALOG_DATA) data: [number, Task]
@@ -26,24 +27,23 @@ export class DeleteModalComponent implements OnInit, DoCheck {
 
   ngOnInit(): void {}
 
-  ngDoCheck(): void {
-    console.log('do check delete');
-    if (this.data[1] !== this.oldData) {
-      console.log('delete not equal do check');
-    }
-  }
-
   deleteTask() {
     if (this.task._id) {
       this.httpService.deleteTask(this.task._id).subscribe((b: any) => {
-        if (b.status === 'Ok') {
+        if (b.status === 'Ok' && this.task._id) {
+          this.update(this.task._id);
           this.close();
         }
       });
     }
   }
 
+  update(id: string) {
+    this.updateTask.updatedTask(id);
+  }
+
   close() {
-    this.dialogRef.close();
+    this.httpService.getTasks().subscribe((b) => (this.tasks = b));
+    this.dialogRef.close({ task: this.tasks });
   }
 }

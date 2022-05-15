@@ -19,6 +19,8 @@ export class HomePageComponent implements OnInit, OnChanges {
   ngOnInit(): void {}
 
   addTask() {
-    const matDialogOpen = this.matDialog.open(AddModalComponent);
+    const matDialogOpen = this.matDialog.open(AddModalComponent, {
+      disableClose: true,
+    });
   }
 }
