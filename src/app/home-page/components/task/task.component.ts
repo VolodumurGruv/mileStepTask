@@ -6,9 +6,6 @@ import {
   ViewContainerRef,
   HostListener,
   OnInit,
-  OnChanges,
-  SimpleChange,
-  SimpleChanges,
 } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { Task } from 'src/app/interfaces/task.interface';
@@ -17,15 +14,13 @@ import { ModalComponent } from '../modal/modal.component';
 import { EditModalComponent } from '../edit-modal/edit-modal.component';
 import { DeleteModalComponent } from '../delete-modal/delete-modal.component';
 import { ModalService } from 'src/app/services/modal.service';
-import { UpdateTaskService } from 'src/app/services/update-task.service';
 
 @Component({
   selector: 'app-task',
   templateUrl: './task.component.html',
   styleUrls: ['./task.component.scss'],
-  providers: [UpdateTaskService],
 })
-export class TaskComponent implements OnInit, OnChanges {
+export class TaskComponent implements OnInit {
   @Input() public task!: TemplateRef<TaskItemComponent>;
 
   @ViewChild('viewContainerRef', { read: ViewContainerRef })
@@ -35,19 +30,9 @@ export class TaskComponent implements OnInit, OnChanges {
     this.addTemplate(this.task);
   }
 
-  public tasks!: Task[];
+  @Input() public tasks!: Task[];
 
-  constructor(
-    public matDialog: MatDialog,
-    private httpService: ModalService,
-    private updateTask: UpdateTaskService
-  ) {}
-
-  ngOnChanges(changes: SimpleChanges): void {
-    for (let change in changes) {
-      console.log(change);
-    }
-  }
+  constructor(public matDialog: MatDialog, private httpService: ModalService) {}
 
   ngOnInit(): void {
     this.httpService.getTasks().subscribe((b) => (this.tasks = b));
@@ -64,11 +49,17 @@ export class TaskComponent implements OnInit, OnChanges {
 
     matConfig.id = id.toString();
     matConfig.height = 'auto';
-    matConfig.width = 'auto';
+    matConfig.minWidth = '700px';
     matConfig.data = [id, this.tasks[id]];
     matConfig.disableClose = true;
 
     const matDialogOpen = this.matDialog.open(componentIs, matConfig);
+
+    matDialogOpen.afterClosed().subscribe((b) => {
+      if (b) {
+        this.tasks = b.task;
+      }
+    });
   }
 
   openTask(id: number, name: string) {

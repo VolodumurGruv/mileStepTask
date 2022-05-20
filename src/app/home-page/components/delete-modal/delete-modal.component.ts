@@ -25,7 +25,9 @@ export class DeleteModalComponent implements OnInit {
     this.task = data[1];
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    console.log(this.data);
+  }
 
   deleteTask() {
     if (this.task._id) {
@@ -43,7 +45,8 @@ export class DeleteModalComponent implements OnInit {
   }
 
   close() {
-    this.httpService.getTasks().subscribe((b) => (this.tasks = b));
-    this.dialogRef.close({ task: this.tasks });
+    this.httpService.getTasks().subscribe((b) => {
+      this.dialogRef.close({ task: b });
+    });
   }
 }

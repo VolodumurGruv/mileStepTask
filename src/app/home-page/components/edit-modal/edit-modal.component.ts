@@ -49,6 +49,8 @@ export class EditModalComponent implements OnInit {
   }
 
   close() {
-    this.dialogRef.close();
+    this.httpService
+      .getTasks()
+      .subscribe((b) => this.dialogRef.close({ task: b }));
   }
 }
