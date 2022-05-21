@@ -9,6 +9,12 @@ import { EditModalComponent } from './components/edit-modal/edit-modal.component
 import { DeleteModalComponent } from './components/delete-modal/delete-modal.component';
 import { AddModalComponent } from './components/add-modal/add-modal.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { ServerInterceptor } from '../services/server-interceptor';
+
+const httpInterceptorProviders = [
+  { provide: HTTP_INTERCEPTORS, useClass: ServerInterceptor, multi: true },
+];
 
 @NgModule({
   declarations: [
@@ -20,7 +26,14 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     DeleteModalComponent,
     AddModalComponent,
   ],
-  imports: [CommonModule, MaterialModule, FormsModule, ReactiveFormsModule],
+  imports: [
+    CommonModule,
+    MaterialModule,
+    FormsModule,
+    ReactiveFormsModule,
+    HttpClientModule,
+  ],
   exports: [TaskComponent],
+  providers: [httpInterceptorProviders],
 })
 export class HomePageModule {}

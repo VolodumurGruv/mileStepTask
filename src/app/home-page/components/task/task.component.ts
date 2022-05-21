@@ -5,21 +5,22 @@ import {
   ViewChild,
   ViewContainerRef,
   HostListener,
+  OnInit,
 } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { Task } from 'src/app/interfaces/task.interface';
-import { tasks } from 'src/app/temporary/task';
 import { TaskItemComponent } from '../task-item/task-item.component';
 import { ModalComponent } from '../modal/modal.component';
 import { EditModalComponent } from '../edit-modal/edit-modal.component';
 import { DeleteModalComponent } from '../delete-modal/delete-modal.component';
+import { ModalService } from 'src/app/services/modal.service';
 
 @Component({
   selector: 'app-task',
   templateUrl: './task.component.html',
   styleUrls: ['./task.component.scss'],
 })
-export class TaskComponent {
+export class TaskComponent implements OnInit {
   @Input() public task!: TemplateRef<TaskItemComponent>;
 
   @ViewChild('viewContainerRef', { read: ViewContainerRef })
@@ -29,9 +30,13 @@ export class TaskComponent {
     this.addTemplate(this.task);
   }
 
-  public tasks: Task[] = tasks;
+  @Input() public tasks!: Task[];
 
-  constructor(public matDialog: MatDialog) {}
+  constructor(public matDialog: MatDialog, private httpService: ModalService) {}
+
+  ngOnInit(): void {
+    this.httpService.getTasks().subscribe((b) => (this.tasks = b));
+  }
 
   private addTemplate(temp: TemplateRef<any>): void {
     if (temp) {
@@ -44,10 +49,17 @@ export class TaskComponent {
 
     matConfig.id = id.toString();
     matConfig.height = 'auto';
-    matConfig.width = 'auto';
+    matConfig.minWidth = '700px';
     matConfig.data = [id, this.tasks[id]];
+    matConfig.disableClose = true;
 
     const matDialogOpen = this.matDialog.open(componentIs, matConfig);
+
+    matDialogOpen.afterClosed().subscribe((b) => {
+      if (b) {
+        this.tasks = b.task;
+      }
+    });
   }
 
   openTask(id: number, name: string) {
@@ -63,11 +75,8 @@ export class TaskComponent {
   }
 
   deleteTask(id: number, name: string) {
-    console.log(id);
     if (name === 'delete') {
       this.openDialog(id, DeleteModalComponent);
     }
   }
-
-  addTask(name: string) {}
 }
