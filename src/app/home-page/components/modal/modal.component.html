@@ -1,20 +1,24 @@
-<ng-container>
-  <div *ngFor="let t of task">
-    <div class="title">
-      {{ t.title }}
+<div>
+  <ng-container>
+    <div *ngFor="let t of task">
+      <div class="title">
+        {{ t.title }}
+      </div>
+      <div class="description">
+        {{ t.description }}
+      </div>
+      <div class="priority">
+        {{ t.priority }}
+      </div>
+      <div class="done">
+        {{ t.isDone }}
+      </div>
+      <div class="duedate">
+        {{ t.dueDate | date: "dd-MM-YYYY" }}
+      </div>
     </div>
-    <div class="description">
-      {{ t.description }}
-    </div>
-    <div class="priority">
-      {{ t.priority }}
-    </div>
-    <div class="done">
-      {{ t.isDone }}
-    </div>
-    <div class="duedate">
-      {{ t.dueDate | date: "dd-MM-YYYY" }}
-    </div>
-  </div>
-  <button (click)="closeModal()">Close</button>
-</ng-container>
+    <button class="btn_close" (click)="closeModal()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </ng-container>
+</div>

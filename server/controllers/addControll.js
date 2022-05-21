@@ -12,7 +12,9 @@ module.exports.taskAdd = async (req, res) => {
       res
         .status(200)
         .send({ status: "Ok", message: "it is saved successfully" });
-    } catch (e) {}
+    } catch (e) {
+      console.error(e.message);
+    }
   } else {
     console.error(`Some error in adding new task ${e}`);
 
