@@ -38,6 +38,10 @@
       </mat-datepicker-actions>
     </mat-datepicker>
   </mat-form-field>
-  <button type="submit">Add</button>
-  <button type="button" (click)="close()">Cancel</button>
+  <div class="btn_group">
+    <button type="submit" mat-raised-button class="btn_green">Add</button>
+    <button type="button" mat-raised-button color="primary" (click)="close()">
+      Cancel
+    </button>
+  </div>
 </form>

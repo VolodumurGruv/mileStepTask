@@ -30,9 +30,28 @@
   }
 
   &_close {
-    display: block;
+    display: inline-block;
     position: absolute;
+    font-weight: 700;
     top: 1rem;
     right: 1rem;
+    border: none;
+    background-color: transparent;
+    color: white;
+    cursor: pointer;
+  }
+
+  &_group {
+    display: flex;
+    justify-content: center;
+
+    .mat-raised-button {
+      margin-right: 0.5rem;
+    }
+  }
+
+  &_green {
+    background-color: rgb(23, 104, 23);
+    color: white;
   }
 }

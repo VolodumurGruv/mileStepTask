@@ -11,6 +11,9 @@ import { AddModalComponent } from './components/add-modal/add-modal.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ServerInterceptor } from '../services/server-interceptor';
+import { FooterComponent } from './components/footer/footer.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { MessageComponent } from './components/message/message.component';
 
 const httpInterceptorProviders = [
   { provide: HTTP_INTERCEPTORS, useClass: ServerInterceptor, multi: true },
@@ -25,6 +28,8 @@ const httpInterceptorProviders = [
     EditModalComponent,
     DeleteModalComponent,
     AddModalComponent,
+    FooterComponent,
+    MessageComponent,
   ],
   imports: [
     CommonModule,
@@ -32,6 +37,7 @@ const httpInterceptorProviders = [
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
+    FontAwesomeModule,
   ],
   exports: [TaskComponent],
   providers: [httpInterceptorProviders],

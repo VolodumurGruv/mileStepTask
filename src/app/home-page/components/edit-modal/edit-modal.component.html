@@ -41,6 +41,10 @@
       </mat-datepicker-actions>
     </mat-datepicker>
   </mat-form-field>
-  <button type="submit">Edit</button>
-  <button type="button" (click)="close()">Cancel</button>
+  <div class="btn_group">
+    <button type="submit" class="btn_green" mat-raised-button>Edit</button>
+    <button type="button" (click)="close()" mat-raised-button color="primary">
+      Cancel
+    </button>
+  </div>
 </form>

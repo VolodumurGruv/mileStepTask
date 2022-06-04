@@ -1,19 +1,15 @@
-import {
-  HttpClient,
-  HttpErrorResponse,
-  HttpHeaders,
-} from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, Observable, throwError } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
+import { catchError, Observable, of } from 'rxjs';
 import { Task } from 'src/app/interfaces/task.interface';
+import { MessageService } from './message.service';
 
 @Injectable({ providedIn: 'root' })
 export class ModalService {
   private URL: string = 'http://localhost:3000';
   private headers = new HttpHeaders().set('Content-Type', 'application/json');
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private message: MessageService) {}
 
   getTasks(): Observable<Task[]> {
     return this.http
@@ -26,12 +22,7 @@ export class ModalService {
             'GET, PATCH, PUT, POST, DELETE, OPTIONS',
         },
       })
-      .pipe(
-        // map((data: any) => {
-        //   return data;
-        // }),
-        catchError(this.handleError)
-      );
+      .pipe(catchError(this.handleError<Task[]>('Got task')));
   }
 
   addTask(task: Task): Observable<Task> {
@@ -39,7 +30,7 @@ export class ModalService {
       .post<Task>(`${this.URL}/add`, JSON.stringify(task), {
         headers: this.headers,
       })
-      .pipe(catchError(this.handleError));
+      .pipe(catchError(this.handleError<Task>('Added task')));
   }
 
   editTask(id: string, task: Task): Observable<Task> {
@@ -47,7 +38,7 @@ export class ModalService {
       .post<Task>(`${this.URL}/edit`, JSON.stringify({ id, ...task }), {
         headers: this.headers,
       })
-      .pipe(catchError(this.handleError));
+      .pipe(catchError(this.handleError<Task>('Edited task')));
   }
 
   deleteTask(id: string): Observable<string> {
@@ -55,18 +46,19 @@ export class ModalService {
       .post<string>(`${this.URL}/delete`, JSON.stringify({ id }), {
         headers: this.headers,
       })
-      .pipe(catchError(this.handleError));
+      .pipe(catchError(this.handleError<any>('deleted task')));
   }
 
-  private handleError(error: HttpErrorResponse) {
-    if (error.status === 0) {
-      console.error(`Client side error: ${error.error}`);
-    } else {
-      console.error(
-        `Backend error STATUS: ${error.status} error: ${error.error}`
-      );
-    }
+  private handleError<T>(operation = 'operation', result?: T) {
+    return (error: any): Observable<T> => {
+      console.error(error);
+      this.log(`${operation} failed: ${error.message}`);
 
-    return throwError(() => new Error('Try later'));
+      return of(result as T);
+    };
+  }
+
+  private log(text: string) {
+    this.message.danger(text);
   }
 }
