@@ -1,0 +1,9 @@
+<ng-container *ngIf="text">
+  <div class="message" [ngClass]="{
+    message_success: type === 'success',
+    message_danger: type === 'danger',
+    message_warrning: type === 'warrning'
+ }">
+    {{ text }}
+  </div>
+</ng-container>

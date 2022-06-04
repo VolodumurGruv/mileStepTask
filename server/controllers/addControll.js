@@ -4,17 +4,9 @@ module.exports.taskAdd = async (req, res) => {
   if (req.body) {
     const task = new Task(req.body);
 
-    try {
-      await task.save();
+    await task.save();
 
-      console.log("task was saved");
-
-      res
-        .status(200)
-        .send({ status: "Ok", message: "it is saved successfully" });
-    } catch (e) {
-      console.error(e.message);
-    }
+    res.status(200).send({ status: "Ok", message: "Task successfully added" });
   } else {
     console.error(`Some error in adding new task ${e}`);
 
@@ -23,42 +15,36 @@ module.exports.taskAdd = async (req, res) => {
 };
 
 module.exports.taskGet = async (req, res) => {
-  try {
-    const allTasks = await Task.find({});
+  const allTasks = await Task.find({});
 
-    res.json(allTasks);
-  } catch (e) {
-    console.error(`Some error in adding new task ${e}`);
-
-    res.status(e.status).send({ error: e });
-  }
+  res.json(allTasks);
 };
 
 module.exports.taskEdit = async (req, res) => {
-  try {
+  if (req.body) {
     const { id } = req.body;
 
-    const task = await Task.findByIdAndUpdate(id, req.body);
+    await Task.findByIdAndUpdate(id, req.body);
 
-    res.status(200).send({ status: "Ok", message: "was edited" });
-  } catch (e) {
-    console.error(`Some error in adding new task ${e}`);
+    res.status(200).send({ status: "Ok", message: "Task successfully edited" });
+  } else {
+    console.error(`Some error in editing task ${e}`);
 
     res.status(e.status).send({ error: e });
   }
 };
 
 module.exports.taskDelete = async (req, res) => {
-  try {
+  if (req.body) {
     const { id } = req.body;
-    console.log(id);
+
     await Task.findByIdAndDelete(id);
 
-    const task = await Task.find({});
-
-    res.status(200).send({ status: "Ok", message: "was deleted", task });
-  } catch (e) {
-    console.error(`Some error in adding new task ${e}`);
+    res
+      .status(200)
+      .send({ status: "Ok", message: "Task successfully deleted" });
+  } else {
+    console.error(`Some error in deleting task ${e}`);
 
     res.status(e.status).send({ error: e });
   }

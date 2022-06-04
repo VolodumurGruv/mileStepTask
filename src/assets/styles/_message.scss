@@ -1,0 +1,24 @@
+.message {
+  display: block;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  padding: 1rem;
+  text-align: center;
+  color: $white;
+  font-size: 18px;
+  font-weight: 500;
+  z-index: 100;
+
+  &_success {
+    background-color: $success;
+  }
+
+  &_danger {
+    background-color: $danger;
+  }
+
+  &_warrning {
+    background-color: $warrning;
+  }
+}

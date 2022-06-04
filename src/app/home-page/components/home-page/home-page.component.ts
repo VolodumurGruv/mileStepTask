@@ -17,6 +17,8 @@ export class HomePageComponent implements OnInit {
   addTask() {
     const matDialogOpen = this.matDialog.open(AddModalComponent, {
       disableClose: true,
+      height: 'auto',
+      minWidth: '700px',
     });
 
     matDialogOpen.afterClosed().subscribe((b) => {
