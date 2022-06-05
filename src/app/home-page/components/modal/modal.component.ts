@@ -1,5 +1,6 @@
 import { Component, OnDestroy, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Subscription } from 'rxjs';
 import { ModalService } from 'src/app/services/modal.service';
 import { Task } from '../../../interfaces/task.interface';
 
@@ -8,28 +9,31 @@ import { Task } from '../../../interfaces/task.interface';
   templateUrl: './modal.component.html',
 })
 export class ModalComponent implements OnInit, OnDestroy {
-  private data!: [number, Task];
   public tasks!: Task[];
   public task!: Task[];
+
+  private aSub: Subscription = new Subscription();
 
   constructor(
     private httpService: ModalService,
     public dialogRef: MatDialogRef<ModalComponent>,
     @Inject(MAT_DIALOG_DATA) data: [number, Task]
   ) {
-    this.data = data;
-
-    this.httpService
-      .getTasks()
-      .subscribe((t) => (this.task = t.filter((_, i) => i === data[0])));
+    this.aSub.add(
+      this.httpService
+        .getTasks()
+        .subscribe((t) => (this.task = t.filter((_, i) => i === data[0])))
+    );
   }
 
   ngOnInit(): void {}
 
   closeModal(): void {
-    this.dialogRef.beforeClosed().subscribe((b) => console.log(b));
+    this.aSub.add(this.dialogRef.beforeClosed().subscribe());
     this.dialogRef.close();
   }
 
-  ngOnDestroy(): void {}
+  ngOnDestroy(): void {
+    this.aSub.unsubscribe();
+  }
 }

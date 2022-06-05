@@ -8,13 +8,13 @@
         {{ t.description }}
       </div>
       <div class="priority">
-        {{ t.priority }}
+        <span>Priority: {{ t.priority }}</span>
       </div>
       <div class="done">
-        {{ t.isDone }}
+        <span>Done: {{ t.isDone }}</span>
       </div>
       <div class="duedate">
-        {{ t.dueDate | date: "dd-MM-YYYY" }}
+        <span>Due date: {{ t.dueDate | date: "dd-MM-YYYY" }} </span>
       </div>
     </div>
     <button class="btn_close" (click)="closeModal()">

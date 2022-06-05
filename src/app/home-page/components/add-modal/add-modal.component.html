@@ -2,10 +2,20 @@
   <mat-form-field appearance="fill">
     <mat-label>Title</mat-label>
     <input matInput type="text" formControlName="title" />
+    <mat-error *ngIf="title.errors?.['required']">Title is required</mat-error>
+    <mat-error *ngIf="title.errors?.['minlength']"
+      >Title should be at least 5 characters long</mat-error
+    >
   </mat-form-field>
   <mat-form-field appearance="fill">
     <mat-label>Description</mat-label>
     <textarea matInput formControlName="description"></textarea>
+    <mat-error *ngIf="description.errors?.['required']"
+      >Description is required</mat-error
+    >
+    <mat-error *ngIf="description.errors?.['minlength']"
+      >Description should be at least 10 characters long</mat-error
+    >
   </mat-form-field>
   <mat-form-field appearance="fill">
     <mat-label>Priority</mat-label>
@@ -16,6 +26,9 @@
       <mat-option value="4">4</mat-option>
       <mat-option value="5">5</mat-option>
     </mat-select>
+    <mat-error *ngIf="priority.errors?.['required']"
+      >Priority is required</mat-error
+    >
   </mat-form-field>
   <div>
     <label>Is done?</label>
@@ -23,6 +36,7 @@
       <mat-radio-button value="true">True</mat-radio-button>
       <mat-radio-button value="false">False</mat-radio-button>
     </mat-radio-group>
+    <mat-error *ngIf="isDone.errors?.['required']">Done is required</mat-error>
   </div>
   <mat-form-field appearance="fill">
     <mat-label>Due date</mat-label>
@@ -37,9 +51,19 @@
         </button>
       </mat-datepicker-actions>
     </mat-datepicker>
+    <mat-error *ngIf="dueDate.errors?.['required']"
+      >Due date is required</mat-error
+    >
   </mat-form-field>
   <div class="btn_group">
-    <button type="submit" mat-raised-button class="btn_green">Add</button>
+    <button
+      type="submit"
+      mat-raised-button
+      class="btn_green"
+      [disabled]="addForm.invalid"
+    >
+      Add
+    </button>
     <button type="button" mat-raised-button color="primary" (click)="close()">
       Cancel
     </button>

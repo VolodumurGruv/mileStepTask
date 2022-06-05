@@ -2,8 +2,10 @@
 <div class="btn">
   <button class="btn_create" (click)="addTask()">Add new task</button>
 </div>
+<main>
+  <app-task [tasks]="tasks"></app-task>
+</main>
 
-<app-task [tasks]="tasks"></app-task>
 <footer>
   <app-footer class="footer"></app-footer>
 </footer>

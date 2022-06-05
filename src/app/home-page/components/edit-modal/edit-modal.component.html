@@ -2,10 +2,20 @@
   <mat-form-field appearance="fill">
     <mat-label>Title</mat-label>
     <input matInput type="text" formControlName="title" />
+    <mat-error *ngIf="title.errors?.['required']">Title is required</mat-error>
+    <mat-error *ngIf="title.errors?.['minlength']"
+      >Title should be at least 5 characters long</mat-error
+    >
   </mat-form-field>
   <mat-form-field appearance="fill">
     <mat-label>Description</mat-label>
     <textarea matInput formControlName="description"></textarea>
+    <mat-error *ngIf="description.errors?.['required']"
+      >Description is required</mat-error
+    >
+    <mat-error *ngIf="description.errors?.['minlength']"
+      >Description should be at least 10 characters long</mat-error
+    >
   </mat-form-field>
   <mat-form-field appearance="fill">
     <mat-label>Priority</mat-label>
@@ -15,6 +25,9 @@
         item
       }}</mat-option>
     </mat-select>
+    <mat-error *ngIf="priority.errors?.['required']"
+      >Priority is required</mat-error
+    >
   </mat-form-field>
   <div>
     <label>Is done?</label>
@@ -40,9 +53,19 @@
         </button>
       </mat-datepicker-actions>
     </mat-datepicker>
+    <mat-error *ngIf="dueDate.errors?.['required']"
+      >Due date is required</mat-error
+    >
   </mat-form-field>
   <div class="btn_group">
-    <button type="submit" class="btn_green" mat-raised-button>Edit</button>
+    <button
+      type="submit"
+      class="btn_green"
+      mat-raised-button
+      [disabled]="editForm.invalid"
+    >
+      Edit
+    </button>
     <button type="button" (click)="close()" mat-raised-button color="primary">
       Cancel
     </button>

@@ -1,5 +1,6 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnDestroy } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Subscription } from 'rxjs';
 import { Task } from 'src/app/interfaces/task.interface';
 import { ModalService } from 'src/app/services/modal.service';
 import { UpdateTaskService } from 'src/app/services/update-task.service';
@@ -10,10 +11,10 @@ import { UpdateTaskService } from 'src/app/services/update-task.service';
   styleUrls: ['./delete-modal.component.scss'],
   providers: [UpdateTaskService],
 })
-export class DeleteModalComponent implements OnInit {
+export class DeleteModalComponent implements OnDestroy {
   private data!: [number, Task];
   public task!: Task;
-  private tasks!: Task[];
+  private aSub: Subscription = new Subscription();
 
   constructor(
     private updateTask: UpdateTaskService,
@@ -25,18 +26,16 @@ export class DeleteModalComponent implements OnInit {
     this.task = data[1];
   }
 
-  ngOnInit(): void {
-    console.log(this.data);
-  }
-
   deleteTask() {
     if (this.task._id) {
-      this.httpService.deleteTask(this.task._id).subscribe((b: any) => {
-        if (b.status === 'Ok' && this.task._id) {
-          this.update(this.task._id);
-          this.close();
-        }
-      });
+      this.aSub.add(
+        this.httpService.deleteTask(this.task._id).subscribe((b: any) => {
+          if (b.status === 'Ok' && this.task._id) {
+            this.update(this.task._id);
+            this.close();
+          }
+        })
+      );
     }
   }
 
@@ -45,8 +44,14 @@ export class DeleteModalComponent implements OnInit {
   }
 
   close() {
-    this.httpService.getTasks().subscribe((b) => {
-      this.dialogRef.close({ task: b });
-    });
+    this.aSub.add(
+      this.httpService.getTasks().subscribe((b) => {
+        this.dialogRef.close({ task: b });
+      })
+    );
+  }
+
+  ngOnDestroy(): void {
+    this.aSub.unsubscribe();
   }
 }
