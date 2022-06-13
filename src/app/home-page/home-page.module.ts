@@ -14,6 +14,7 @@ import { ServerInterceptor } from '../services/server-interceptor';
 import { FooterComponent } from './components/footer/footer.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { MessageComponent } from './components/message/message.component';
+import { HomePageRoutingModule } from './home-page-routing.module';
 
 const httpInterceptorProviders = [
   { provide: HTTP_INTERCEPTORS, useClass: ServerInterceptor, multi: true },
@@ -33,6 +34,7 @@ const httpInterceptorProviders = [
   ],
   imports: [
     CommonModule,
+    HomePageRoutingModule,
     MaterialModule,
     FormsModule,
     ReactiveFormsModule,

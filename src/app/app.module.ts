@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HomePageModule } from './home-page/home-page.module';
 import { MaterialModule } from './material.module';
+import { RegistrationModule } from './registration/registration.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -14,6 +15,7 @@ import { MaterialModule } from './material.module';
     AppRoutingModule,
     BrowserAnimationsModule,
     HomePageModule,
+    RegistrationModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

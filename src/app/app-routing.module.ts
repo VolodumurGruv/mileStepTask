@@ -6,7 +6,15 @@ const routes: Routes = [
   { path: '', redirectTo: '/', pathMatch: 'full' },
   {
     path: '',
-    component: HomePageComponent,
+    loadChildren: () =>
+      import('./home-page/home-page.module').then((m) => m.HomePageModule),
+  },
+  {
+    path: 'registration',
+    loadChildren: () =>
+      import('./registration/registration.module').then(
+        (m) => m.RegistrationModule
+      ),
   },
   { path: '**', redirectTo: '/', pathMatch: 'full' },
 ];
