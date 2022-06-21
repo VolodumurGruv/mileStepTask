@@ -46,6 +46,22 @@
   &_center {
     display: flex;
     align-items: center;
+    justify-content: center;
+  }
+
+  &_registration {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 25%;
+    left: 35%;
+    width: 17rem;
+    height: 10rem;
+    border-radius: 7px;
+    box-shadow: 5px 5px 5px 3px $shadow;
+    margin: 2rem;
+    padding: 1rem;
+    background: $white;
   }
 }
 

@@ -1,1 +1,24 @@
-<p>signup works!</p>
+<form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+  <mat-form-field appearance="fill">
+    <mat-label>Username</mat-label>
+    <input matInput type="text" formControlName="userName" />
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Email</mat-label>
+    <input matInput type="email" formControlName="email" />
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Password</mat-label>
+    <input matInput type="password" formControlName="pass" />
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Confirm password</mat-label>
+    <input matInput type="password" formControlName="confirm" />
+  </mat-form-field>
+  <div class="btn_group">
+    <button type="submit" mat-raised-button class="btn_green">Confirm</button>
+    <button type="button" mat-raised-button color="primary" (click)="close()">
+      Cnacel
+    </button>
+  </div>
+</form>

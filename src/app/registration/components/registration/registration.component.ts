@@ -9,19 +9,23 @@ import { SignupComponent } from '../signup/signup.component';
   styleUrls: ['./registration.component.scss'],
 })
 export class RegistrationComponent implements OnInit {
-  constructor(private matDialog: MatDialog) {}
+  constructor(public matDialog: MatDialog) {}
 
   ngOnInit(): void {}
 
   login() {
-    const loginMatDialog = this.matDialog.open(LoginComponent, {
+    this.matDialog.open(LoginComponent, {
       disableClose: true,
+      width: '27rem',
+      height: '15rem',
     });
   }
 
   signup() {
-    const loginMatDialog = this.matDialog.open(SignupComponent, {
-      // disableClose: true,
+    this.matDialog.open(SignupComponent, {
+      disableClose: true,
+      width: '27rem',
+      height: '23rem',
     });
   }
 }
