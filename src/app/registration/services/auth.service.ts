@@ -4,8 +4,9 @@ import {
   HttpHeaders,
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, Observable, throwError } from 'rxjs';
+import { catchError, Observable, of, throwError } from 'rxjs';
 import { User } from 'src/app/interfaces/user.interface';
+import { MessageService } from 'src/app/services/message.service';
 
 @Injectable({
   providedIn: 'root',
@@ -15,12 +16,14 @@ export class AuthService {
   private headers = new HttpHeaders().set('Content-Type', 'application/json');
   private currentUser = {};
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private message: MessageService) {}
 
   signup(user: User): Observable<any> {
     return this.http
-      .post<any>(`${this.URL}/signup`, user)
-      .pipe(catchError(this.handleError));
+      .post<any>(`${this.URL}/signup`, JSON.stringify(user), {
+        headers: this.headers,
+      })
+      .pipe(catchError(this.handleError<User>('signed up')));
   }
 
   singin(user: User) {
@@ -31,14 +34,28 @@ export class AuthService {
       });
   }
 
-  handleError(error: HttpErrorResponse) {
-    let msg = '';
+  getToken() {
+    return localStorage.getItem('access_token');
+  }
 
-    if (error.error instanceof ErrorEvent) {
-      msg = error.error.message;
-    } else {
-      msg = `Error Code: ${error.status}\nMessage: ${error.message}`;
-    }
-    return throwError(msg);
+  get isLoggedIn(): boolean {
+    return localStorage.getItem('access_token') !== null ? true : false;
+  }
+
+  logOut() {
+    localStorage.removeItem('access_token');
+  }
+
+  private handleError<T>(operation = 'operation', result?: T) {
+    return (error: any): Observable<T> => {
+      console.error(error);
+      this.log(`${operation} failed: ${error.message}`);
+
+      return of(result as T);
+    };
+  }
+
+  private log(text: string) {
+    this.message.danger(text);
   }
 }
