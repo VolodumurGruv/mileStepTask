@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { HomePageComponent } from './home-page/components/home-page/home-page.component';
+import { AuthGuard } from './registration/auth.guard';
 
 const routes: Routes = [
   { path: '', redirectTo: '/', pathMatch: 'full' },
@@ -8,6 +8,7 @@ const routes: Routes = [
     path: '',
     loadChildren: () =>
       import('./home-page/home-page.module').then((m) => m.HomePageModule),
+    canActivate: [AuthGuard],
   },
   {
     path: 'registration',

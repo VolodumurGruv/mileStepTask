@@ -1,8 +1,7 @@
 .btn {
-  display: inline-block;
-  position: sticky;
-  top: 1rem;
-  left: 2rem;
+  display: flex;
+  justify-content: space-between;
+  margin: 2rem;
 
   &_create {
     width: auto;

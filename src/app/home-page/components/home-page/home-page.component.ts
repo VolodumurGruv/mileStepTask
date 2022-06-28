@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Task } from 'src/app/interfaces/task.interface';
+import { AuthService } from 'src/app/registration/services/auth.service';
 import { AddModalComponent } from '../add-modal/add-modal.component';
 
 @Component({
@@ -10,7 +11,7 @@ import { AddModalComponent } from '../add-modal/add-modal.component';
 })
 export class HomePageComponent implements OnInit {
   public tasks!: Task[];
-  constructor(public matDialog: MatDialog) {}
+  constructor(public matDialog: MatDialog, private authService: AuthService) {}
 
   ngOnInit(): void {}
 
@@ -26,5 +27,9 @@ export class HomePageComponent implements OnInit {
         this.tasks = b.task;
       }
     });
+  }
+
+  logout() {
+    this.authService.logOut();
   }
 }

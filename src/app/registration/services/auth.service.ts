@@ -28,9 +28,12 @@ export class AuthService {
 
   singin(user: User) {
     return this.http
-      .post<any>(`${this.URL}/signup`, user)
+      .post<any>(`${this.URL}/login`, user)
+      .pipe(catchError(this.handleError('logged in')))
       .subscribe((res: any) => {
-        localStorage.setItem('access_token', res.token);
+        if (res.token) {
+          localStorage.setItem('access_token', res.token);
+        }
       });
   }
 
