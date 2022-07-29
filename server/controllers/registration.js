@@ -6,6 +6,10 @@ module.exports.signup = async (req, res) => {
   const { userName, email, password, confirmedAt } = { ...req.body };
 
   bcrypt.hash(password, 10, async (err, hash) => {
+    if (err) {
+      throw err;
+    }
+
     const user = new User({
       userName,
       email,
@@ -39,12 +43,10 @@ module.exports.login = async (req, res) => {
     "some secret key",
     { expiresIn: "1h" }
   );
-  res
-    .status(200)
-    .send({
-      message: "logged in",
-      token: jwtToken,
-      expiresIn: 3600,
-      _id: user._id,
-    });
+  res.status(200).send({
+    message: "logged in",
+    token: jwtToken,
+    expiresIn: 3600,
+    _id: user._id,
+  });
 };

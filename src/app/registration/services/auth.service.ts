@@ -4,6 +4,7 @@ import {
   HttpHeaders,
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { catchError, Observable, of, throwError } from 'rxjs';
 import { User } from 'src/app/interfaces/user.interface';
 import { MessageService } from 'src/app/services/message.service';
@@ -16,7 +17,11 @@ export class AuthService {
   private headers = new HttpHeaders().set('Content-Type', 'application/json');
   private currentUser = {};
 
-  constructor(private http: HttpClient, private message: MessageService) {}
+  constructor(
+    private http: HttpClient,
+    private message: MessageService,
+    private router: Router
+  ) {}
 
   signup(user: User): Observable<any> {
     return this.http
@@ -33,6 +38,7 @@ export class AuthService {
       .subscribe((res: any) => {
         if (res.token) {
           localStorage.setItem('access_token', res.token);
+          this.router.navigate(['/']);
         }
       });
   }
