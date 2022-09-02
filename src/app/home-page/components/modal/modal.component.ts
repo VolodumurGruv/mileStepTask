@@ -19,9 +19,15 @@ export class ModalComponent implements OnInit, OnDestroy {
     public dialogRef: MatDialogRef<ModalComponent>,
     @Inject(MAT_DIALOG_DATA) data: [number, Task]
   ) {
+    let userID = localStorage.getItem('userID');
+
+    if (!userID) {
+      userID = '';
+    }
+
     this.aSub.add(
       this.httpService
-        .getTasks()
+        .getTasks(userID)
         .subscribe((t) => (this.task = t.filter((_, i) => i === data[0])))
     );
   }

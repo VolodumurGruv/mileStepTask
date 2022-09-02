@@ -43,6 +43,7 @@ module.exports.login = async (req, res) => {
     "some secret key",
     { expiresIn: "1h" }
   );
+
   res.status(200).send({
     message: "logged in",
     token: jwtToken,

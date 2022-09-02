@@ -66,9 +66,15 @@ export class EditModalComponent implements OnInit, OnDestroy {
   }
 
   close() {
+    let userID = localStorage.getItem('userID');
+
+    if (!userID) {
+      userID = '';
+    }
+
     this.aSub.add(
       this.httpService
-        .getTasks()
+        .getTasks(userID)
         .subscribe((b) => this.dialogRef.close({ task: b }))
     );
   }

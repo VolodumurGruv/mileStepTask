@@ -1,11 +1,7 @@
-import {
-  HttpClient,
-  HttpErrorResponse,
-  HttpHeaders,
-} from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { catchError, Observable, of, throwError } from 'rxjs';
+import { catchError, Observable, of } from 'rxjs';
 import { User } from 'src/app/interfaces/user.interface';
 import { MessageService } from 'src/app/services/message.service';
 
@@ -15,7 +11,6 @@ import { MessageService } from 'src/app/services/message.service';
 export class AuthService {
   private URL: string = 'http://localhost:3000';
   private headers = new HttpHeaders().set('Content-Type', 'application/json');
-  private currentUser = {};
 
   constructor(
     private http: HttpClient,
@@ -33,11 +28,13 @@ export class AuthService {
 
   singin(user: User) {
     return this.http
-      .post<any>(`${this.URL}/login`, user)
+      .post<User>(`${this.URL}/login`, user)
       .pipe(catchError(this.handleError('logged in')))
       .subscribe((res: any) => {
         if (res.token) {
+          console.log(res);
           localStorage.setItem('access_token', res.token);
+          localStorage.setItem('userID', res._id);
           this.router.navigate(['/']);
         }
       });

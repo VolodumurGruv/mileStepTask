@@ -44,8 +44,14 @@ export class DeleteModalComponent implements OnDestroy {
   }
 
   close() {
+    let userID = localStorage.getItem('userID');
+
+    if (!userID) {
+      userID = '';
+    }
+
     this.aSub.add(
-      this.httpService.getTasks().subscribe((b) => {
+      this.httpService.getTasks(userID).subscribe((b) => {
         this.dialogRef.close({ task: b });
       })
     );

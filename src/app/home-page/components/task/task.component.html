@@ -1,5 +1,5 @@
 <div><ng-content></ng-content></div>
-<ng-container #viewContainerRef>
+<ng-container *ngIf="tasks.length" #viewContainerRef>
   <div class="task">
     <div class="task_item" *ngFor="let task of tasks; index as id">
       <div class="task_title" (click)="openTask(id, 'task')">

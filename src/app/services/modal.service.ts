@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, Observable, of } from 'rxjs';
 import { Task } from 'src/app/interfaces/task.interface';
@@ -11,24 +11,18 @@ export class ModalService {
 
   constructor(private http: HttpClient, private message: MessageService) {}
 
-  getTasks(): Observable<Task[]> {
+  getTasks(id: string): Observable<Task[]> {
+    const options = { params: new HttpParams().set('userID', id) };
     return this.http
-      .get<Task[]>(this.URL, {
-        headers: {
-          'Access-Control-Allow-Origin': '*',
-          'Access-Control-Allow-Headers':
-            'Origin, X-Requested-With, Content-Type, Accept',
-          'Access-Control-Allow-Methods':
-            'GET, PATCH, PUT, POST, DELETE, OPTIONS',
-        },
-      })
+      .get<Task[]>(this.URL, options)
       .pipe(catchError(this.handleError<Task[]>('Got task')));
   }
 
-  addTask(task: Task): Observable<Task> {
+  addTask(task: Task, id: string): Observable<Task> {
     return this.http
       .post<Task>(`${this.URL}/add`, JSON.stringify(task), {
         headers: this.headers,
+        params: new HttpParams().set('userID', id),
       })
       .pipe(catchError(this.handleError<Task>('Added task')));
   }

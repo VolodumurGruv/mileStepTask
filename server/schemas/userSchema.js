@@ -5,6 +5,7 @@ const UserSchema = new Schema({
   email: String,
   password: String,
   confirmedAt: Date,
+  tasks: [{ type: Schema.Types.ObjectId, ref: "Task" }],
 });
 
 module.exports = model("User", UserSchema);

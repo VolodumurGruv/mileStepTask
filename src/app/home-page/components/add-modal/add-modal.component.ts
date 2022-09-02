@@ -10,6 +10,7 @@ import { ModalService } from 'src/app/services/modal.service';
 })
 export class AddModalComponent implements OnDestroy {
   private aSub: Subscription = new Subscription();
+  private userID = localStorage.getItem('userID');
 
   public addForm = this.fb.group({
     title: [
@@ -33,24 +34,34 @@ export class AddModalComponent implements OnDestroy {
 
   constructor(
     private fb: FormBuilder,
-    private dialogRef: MatDialogRef<AddModalComponent>,
-    private httpService: ModalService
+    private httpService: ModalService,
+    private dialogRef: MatDialogRef<AddModalComponent>
   ) {}
 
   onSubmit() {
+    if (!this.userID) {
+      this.userID = '';
+    }
+
     this.aSub.add(
-      this.httpService.addTask(this.addForm.value).subscribe((b: any) => {
-        if (b.status === 'Ok') {
-          this.close();
-        }
-      })
+      this.httpService
+        .addTask(this.addForm.value, this.userID)
+        .subscribe((b: any) => {
+          if (b.status === 'Ok') {
+            this.close();
+          }
+        })
     );
   }
 
   close() {
+    if (!this.userID) {
+      this.userID = '';
+    }
+
     this.aSub.add(
       this.httpService
-        .getTasks()
+        .getTasks(this.userID)
         .subscribe((b) => this.dialogRef.close({ task: b }))
     );
   }

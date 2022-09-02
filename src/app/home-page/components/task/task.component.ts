@@ -22,6 +22,7 @@ import { ModalService } from 'src/app/services/modal.service';
 })
 export class TaskComponent implements OnInit {
   @Input() public task!: TemplateRef<TaskItemComponent>;
+  @Input() public tasks!: Task[];
 
   @ViewChild('viewContainerRef', { read: ViewContainerRef })
   public viewContainerRef!: ViewContainerRef;
@@ -30,12 +31,27 @@ export class TaskComponent implements OnInit {
     this.addTemplate(this.task);
   }
 
-  @Input() public tasks!: Task[];
-
   constructor(public matDialog: MatDialog, private httpService: ModalService) {}
 
   ngOnInit(): void {
-    this.httpService.getTasks().subscribe((b) => (this.tasks = b));
+    this.tasks = [];
+    this.getTasks();
+  }
+
+  private getTasks() {
+    let userID = localStorage.getItem('userID');
+
+    if (!userID) {
+      userID = '';
+    }
+
+    this.httpService.getTasks(userID).subscribe((b: Task[]) => {
+      if (Array.isArray(b)) {
+        console.log('is array');
+
+        this.tasks = b;
+      }
+    });
   }
 
   private addTemplate(temp: TemplateRef<any>): void {
