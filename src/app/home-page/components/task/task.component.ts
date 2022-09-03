@@ -56,7 +56,7 @@ export class TaskComponent implements OnInit {
 
     this.httpService.getTasks(userID).subscribe((b: Task[]) => {
       if (Array.isArray(b)) {
-        this.tasks = b.sort((a: any, b: any) =>
+        this.tasks = b?.sort((a: any, b: any) =>
           this.sort(a[this.currentSelect], b[this.currentSelect])
         );
       }
@@ -81,10 +81,13 @@ export class TaskComponent implements OnInit {
     const matDialogOpen = this.matDialog.open(componentIs, matConfig);
 
     matDialogOpen.afterClosed().subscribe((b) => {
-      if (b) {
-        this.tasks = b.task.sort((a: any, b: any) =>
+      console.log(b);
+      if (b.task.length) {
+        this.tasks = b?.task.sort((a: any, b: any) =>
           this.sort(a[this.currentSelect], b[this.currentSelect])
         );
+      } else {
+        this.tasks = [];
       }
     });
   }
