@@ -1,0 +1,14 @@
+<div class="sort">
+  <mat-form-field>
+    <mat-label>Sort by:</mat-label>
+    <mat-select
+      matNativeControl
+      (valueChange)="selectedCategory($event)"
+      [value]="sortDefault"
+    >
+      <mat-option *ngFor="let value of sortedValues" [value]="value">{{
+        value
+      }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>

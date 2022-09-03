@@ -6,6 +6,8 @@ import {
   ViewContainerRef,
   HostListener,
   OnInit,
+  Output,
+  EventEmitter,
 } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { Task } from 'src/app/interfaces/task.interface';
@@ -14,6 +16,7 @@ import { ModalComponent } from '../modal/modal.component';
 import { EditModalComponent } from '../edit-modal/edit-modal.component';
 import { DeleteModalComponent } from '../delete-modal/delete-modal.component';
 import { ModalService } from 'src/app/services/modal.service';
+import { SortComponent } from '../sort/sort.component';
 
 @Component({
   selector: 'app-task',
@@ -27,9 +30,15 @@ export class TaskComponent implements OnInit {
   @ViewChild('viewContainerRef', { read: ViewContainerRef })
   public viewContainerRef!: ViewContainerRef;
 
+  @ViewChild(SortComponent) private sorted!: SortComponent;
+
   @HostListener('click') onClick() {
     this.addTemplate(this.task);
   }
+
+  private currentSelect: string = 'isDone';
+
+  public taskPriority: string[] = ['red', 'orange', 'green', 'blue', 'black'];
 
   constructor(public matDialog: MatDialog, private httpService: ModalService) {}
 
@@ -38,7 +47,7 @@ export class TaskComponent implements OnInit {
     this.getTasks();
   }
 
-  private getTasks() {
+  private getTasks(): void {
     let userID = localStorage.getItem('userID');
 
     if (!userID) {
@@ -47,9 +56,9 @@ export class TaskComponent implements OnInit {
 
     this.httpService.getTasks(userID).subscribe((b: Task[]) => {
       if (Array.isArray(b)) {
-        console.log('is array');
-
-        this.tasks = b;
+        this.tasks = b.sort((a: any, b: any) =>
+          this.sort(a[this.currentSelect], b[this.currentSelect])
+        );
       }
     });
   }
@@ -60,7 +69,7 @@ export class TaskComponent implements OnInit {
     }
   }
 
-  openDialog(id: number, componentIs: any) {
+  private openDialog(id: number, componentIs: any) {
     const matConfig = new MatDialogConfig();
 
     matConfig.id = id.toString();
@@ -73,26 +82,46 @@ export class TaskComponent implements OnInit {
 
     matDialogOpen.afterClosed().subscribe((b) => {
       if (b) {
-        this.tasks = b.task;
+        this.tasks = b.task.sort((a: any, b: any) =>
+          this.sort(a[this.currentSelect], b[this.currentSelect])
+        );
       }
     });
   }
 
-  openTask(id: number, name: string) {
+  public openTask(id: number, name: string): void {
     if (name === 'task') {
       this.openDialog(id, ModalComponent);
     }
   }
 
-  editTask(id: number, name: string) {
+  public editTask(id: number, name: string): void {
     if (name === 'edit') {
       this.openDialog(id, EditModalComponent);
     }
   }
 
-  deleteTask(id: number, name: string) {
+  public deleteTask(id: number, name: string): void {
     if (name === 'delete') {
       this.openDialog(id, DeleteModalComponent);
     }
+  }
+
+  public sortTasks(event: string): void {
+    this.currentSelect = event;
+    this.tasks = this.tasks.sort((a: any, b: any) =>
+      this.sort(a[event], b[event])
+    );
+  }
+
+  private sort(a: any, b: any): number {
+    if (a > b) {
+      return 1;
+    }
+    if (a < b) {
+      return -1;
+    }
+
+    return 0;
   }
 }

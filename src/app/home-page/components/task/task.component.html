@@ -1,17 +1,28 @@
 <div><ng-content></ng-content></div>
 <ng-container *ngIf="tasks.length" #viewContainerRef>
+  <app-sort (sorted)="sortTasks($event)"></app-sort>
   <div class="task">
-    <div class="task_item" *ngFor="let task of tasks; index as id">
-      <div class="task_title" (click)="openTask(id, 'task')">
-        {{ task.title }}
-      </div>
-      <div class="task_icons">
-        <button class="btn_icon" (click)="editTask(id, 'edit')">
-          <mat-icon>edit</mat-icon>
-        </button>
-        <button class="btn_icon" (click)="deleteTask(id, 'delete')">
-          <mat-icon>delete</mat-icon>
-        </button>
+    <div *ngFor="let task of tasks; index as id">
+      <div class="task_item" [class]="task.isDone ? 'task_done' : ''">
+        <div class="task_title" (click)="openTask(id, 'task')">
+          <span
+            class="task_priority"
+            [style.background]="taskPriority[task.priority - 1]"
+          ></span>
+          {{ task.title }}
+        </div>
+        <div class="task_icons">
+          <button class="btn_icon" (click)="editTask(id, 'edit')">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button
+            class="btn_icon"
+            (click)="deleteTask(id, 'delete')"
+            [disabled]="task.isDone ? false : true"
+          >
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
       </div>
     </div>
   </div>

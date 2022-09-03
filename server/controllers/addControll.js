@@ -5,11 +5,11 @@ const { Types } = require("mongoose");
 module.exports.taskAdd = async (req, res) => {
   const { userID } = req.query;
   const user = await User.findById(userID);
+
   if (req.body) {
     const task = new Task(req.body);
 
     task._id = new Types.ObjectId();
-
     user.tasks.push(task._id);
 
     await task.save();

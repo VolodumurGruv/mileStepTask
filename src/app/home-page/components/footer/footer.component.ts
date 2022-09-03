@@ -7,7 +7,7 @@ import { faCodeFork } from '@fortawesome/free-solid-svg-icons';
   styleUrls: ['./footer.component.scss'],
 })
 export class FooterComponent implements OnInit {
-  faIcon = faCodeFork;
+  public faIcon = faCodeFork;
   constructor() {}
   ngOnInit(): void {}
 }

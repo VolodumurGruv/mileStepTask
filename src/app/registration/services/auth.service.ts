@@ -32,7 +32,6 @@ export class AuthService {
       .pipe(catchError(this.handleError('logged in')))
       .subscribe((res: any) => {
         if (res.token) {
-          console.log(res);
           localStorage.setItem('access_token', res.token);
           localStorage.setItem('userID', res._id);
           this.router.navigate(['/']);
@@ -49,7 +48,7 @@ export class AuthService {
   }
 
   logOut() {
-    localStorage.removeItem('access_token');
+    localStorage.clear();
   }
 
   private handleError<T>(operation = 'operation', result?: T) {

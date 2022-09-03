@@ -39,6 +39,18 @@
     cursor: pointer;
   }
 
+  &_done {
+    background: rgba(0, 0, 0, 0.26);
+    text-decoration: line-through red 2px;
+  }
+
+  &_priority {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin-right: 5px;
+  }
+
   &_icons mat-icon {
     text-shadow: 2px 2px 2px $white;
   }
@@ -72,4 +84,8 @@ form {
 
 main {
   min-height: 70%;
+}
+
+.sort {
+  margin-left: 2.5rem;
 }

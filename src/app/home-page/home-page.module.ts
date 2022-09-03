@@ -15,6 +15,7 @@ import { FooterComponent } from './components/footer/footer.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { MessageComponent } from './components/message/message.component';
 import { HomePageRoutingModule } from './home-page-routing.module';
+import { SortComponent } from './components/sort/sort.component';
 
 const httpInterceptorProviders = [
   { provide: HTTP_INTERCEPTORS, useClass: ServerInterceptor, multi: true },
@@ -31,6 +32,7 @@ const httpInterceptorProviders = [
     AddModalComponent,
     FooterComponent,
     MessageComponent,
+    SortComponent,
   ],
   imports: [
     CommonModule,

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Task } from 'src/app/interfaces/task.interface';
@@ -10,15 +10,14 @@ import { AddModalComponent } from '../add-modal/add-modal.component';
   templateUrl: './home-page.component.html',
   styleUrls: ['./home-page.component.scss'],
 })
-export class HomePageComponent implements OnInit {
+export class HomePageComponent {
   public tasks!: Task[];
+
   constructor(
     public matDialog: MatDialog,
     private authService: AuthService,
     private router: Router
   ) {}
-
-  ngOnInit(): void {}
 
   addTask() {
     const matDialogOpen = this.matDialog.open(AddModalComponent, {
