@@ -1,10 +1,10 @@
 <app-message></app-message>
 <div class="btn">
   <button class="btn_create" (click)="addTask()">Add new task</button>
+  <div class="header">Bucket List</div>
   <button class="btn_link" (click)="logout()">Logout</button>
 </div>
 <main>
-
   <app-task [tasks]="tasks"></app-task>
 </main>
 

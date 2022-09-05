@@ -6,8 +6,6 @@ import {
   ViewContainerRef,
   HostListener,
   OnInit,
-  Output,
-  EventEmitter,
 } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { Task } from 'src/app/interfaces/task.interface';
@@ -16,7 +14,8 @@ import { ModalComponent } from '../modal/modal.component';
 import { EditModalComponent } from '../edit-modal/edit-modal.component';
 import { DeleteModalComponent } from '../delete-modal/delete-modal.component';
 import { ModalService } from 'src/app/services/modal.service';
-import { SortComponent } from '../sort/sort.component';
+
+import { sort } from 'src/app/home-page/helpers/sort';
 
 @Component({
   selector: 'app-task',
@@ -29,8 +28,6 @@ export class TaskComponent implements OnInit {
 
   @ViewChild('viewContainerRef', { read: ViewContainerRef })
   public viewContainerRef!: ViewContainerRef;
-
-  @ViewChild(SortComponent) private sorted!: SortComponent;
 
   @HostListener('click') onClick() {
     this.addTemplate(this.task);
@@ -56,8 +53,8 @@ export class TaskComponent implements OnInit {
 
     this.httpService.getTasks(userID).subscribe((b: Task[]) => {
       if (Array.isArray(b)) {
-        this.tasks = b?.sort((a: any, b: any) =>
-          this.sort(a[this.currentSelect], b[this.currentSelect])
+        this.tasks = b.sort((a: any, b: any) =>
+          sort(a[this.currentSelect], b[this.currentSelect])
         );
       }
     });
@@ -81,10 +78,9 @@ export class TaskComponent implements OnInit {
     const matDialogOpen = this.matDialog.open(componentIs, matConfig);
 
     matDialogOpen.afterClosed().subscribe((b) => {
-      console.log(b);
       if (b.task.length) {
         this.tasks = b?.task.sort((a: any, b: any) =>
-          this.sort(a[this.currentSelect], b[this.currentSelect])
+          sort(a[this.currentSelect], b[this.currentSelect])
         );
       } else {
         this.tasks = [];
@@ -112,19 +108,6 @@ export class TaskComponent implements OnInit {
 
   public sortTasks(event: string): void {
     this.currentSelect = event;
-    this.tasks = this.tasks.sort((a: any, b: any) =>
-      this.sort(a[event], b[event])
-    );
-  }
-
-  private sort(a: any, b: any): number {
-    if (a > b) {
-      return 1;
-    }
-    if (a < b) {
-      return -1;
-    }
-
-    return 0;
+    this.tasks = this.tasks.sort((a: any, b: any) => sort(a[event], b[event]));
   }
 }

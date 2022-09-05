@@ -3,6 +3,17 @@
   justify-content: space-between;
   margin: 2rem;
 
+  .header {
+    margin-top: 1rem;
+    font-size: 2.5rem;
+    font-weight: 700;
+    letter-spacing: 1.2rem;
+    text-shadow: -1px 1px 2px rgb(218, 214, 214),
+      -2px 1px 2px rgb(218, 214, 214), -3px 1px 2px #000, -4px 1px 2px #000,
+      -5px 1px 2px rgb(218, 214, 214), -6px 1px 2px rgb(218, 214, 214),
+      -7px 1px 2px #000, -8px 1px 2px #000;
+  }
+
   &_create {
     width: auto;
     height: auto;
