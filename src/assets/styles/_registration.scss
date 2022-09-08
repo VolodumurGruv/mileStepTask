@@ -5,3 +5,24 @@
   font-weight: 700;
   font-size: 1.3rem;
 }
+
+.intro {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+
+  &-firstline {
+    margin-top: 20px;
+    font-size: 24px;
+    font-weight: 500;
+    text-shadow: 2px 2px 2px grey;
+  }
+
+  &-the {
+    margin-top: 10px;
+    font-size: 22px;
+    font-weight: 500;
+    text-shadow: -2px 1px 2px grey;
+  }
+}
