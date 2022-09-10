@@ -16,9 +16,9 @@
       <div class="duedate">
         <span>Due date: {{ t.dueDate | date: "dd-MM-YYYY" }} </span>
       </div>
+      <button class="btn_close" (click)="closeModal()">
+        <mat-icon>close</mat-icon>
+      </button>
     </div>
-    <button class="btn_close" (click)="closeModal()">
-      <mat-icon>close</mat-icon>
-    </button>
   </ng-container>
 </div>

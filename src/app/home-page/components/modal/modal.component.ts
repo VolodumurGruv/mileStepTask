@@ -28,14 +28,15 @@ export class ModalComponent implements OnInit, OnDestroy {
     this.aSub.add(
       this.httpService
         .getTasks(userID)
-        .subscribe((t) => (this.task = t.filter((_, i) => i === data[0])))
+        .subscribe(
+          (t) => (this.task = t.filter((item, i) => item._id === data[1]._id))
+        )
     );
   }
 
   ngOnInit(): void {}
 
   closeModal(): void {
-    this.aSub.add(this.dialogRef.beforeClosed().subscribe());
     this.dialogRef.close();
   }
 

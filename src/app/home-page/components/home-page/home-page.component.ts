@@ -28,6 +28,7 @@ export class HomePageComponent {
 
     matDialogOpen.afterClosed().subscribe((b) => {
       if (b) {
+        console.log(b);
         this.tasks = b.task;
       }
     });

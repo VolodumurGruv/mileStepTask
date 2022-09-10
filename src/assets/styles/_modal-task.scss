@@ -1,4 +1,5 @@
 .title {
+  text-align: center;
   font-family: $global-font;
   font-size: 1.3rem;
   font-weight: 900;
@@ -7,31 +8,19 @@
 
 .description {
   font-family: $lato-font;
-  font-size: 1.1rem;
+  font-size: 1.4rem;
   font-weight: 700;
   margin-bottom: 1.5rem;
 }
 
-.priority {
-  font-family: $lato-font;
-  font-size: 1rem;
-  margin-bottom: 1rem;
-  font-weight: 800;
-  text-align: center;
-}
-
-.done {
-  text-align: center;
-  font-size: 1rem;
-  font-weight: 900;
-  font-family: $lato-font;
-}
-
+.priority,
+.done,
 .duedate {
   text-align: center;
-  font-size: 1rem;
-  font-weight: 900;
   font-family: $lato-font;
+  font-size: 1.2rem;
+  margin-bottom: 0.2rem;
+  font-weight: 800;
 }
 
 .mat-dialog-actions {
